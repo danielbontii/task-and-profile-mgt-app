@@ -18,4 +18,9 @@ public class TodoServiceImpl implements TodoService {
     public List<Todo> findAll() {
         return todoRepository.findAll();
     }
+
+    @Override
+    public Todo findById(Long id) {
+        return todoRepository.findById(id).orElse(null);
+    }
 }

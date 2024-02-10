@@ -2,6 +2,7 @@ scalar LocalDateTime
 
 type Query {
     allTodos: [Todo]
+    todoById(id: ID): Todo!
 }
 
 type User {
@@ -11,7 +12,7 @@ type User {
     email: String!
     todos: [Todo]
     createdAt: LocalDateTime!
-    updatedAt: LocalDateTime!
+    updatedAt: LocalDateTime
 }
 
 type Todo{
@@ -21,5 +22,5 @@ type Todo{
     completed: Boolean!
     user: User!
     createdAt: LocalDateTime!
-    updatedAt: LocalDateTime!
+    updatedAt: LocalDateTime
 }
