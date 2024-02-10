@@ -5,6 +5,10 @@ type Query {
     todoById(id: ID): Todo!
 }
 
+type Mutation {
+    createTodo(todo: TodoInput): Todo
+}
+
 type User {
     id: ID!
     firstName: String!
@@ -23,4 +27,11 @@ type Todo{
     user: User!
     createdAt: LocalDateTime!
     updatedAt: LocalDateTime
+}
+
+input TodoInput {
+    title: String!
+    description: String
+    userId: Int!  #  see if long is feasible later
+    completed: Boolean
 }

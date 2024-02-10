@@ -1,9 +1,11 @@
 package com.danielbontii.tpms.controllers;
 
+import com.danielbontii.tpms.dtos.TodoRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.services.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -21,8 +23,13 @@ public class TodoController {
     }
 
     @QueryMapping
-    public Todo todoById(@Argument Long id) {
+    public Todo todoById(@Argument(name = "id") Long id) {
         return todoService.findById(id);
+    }
+
+    @MutationMapping
+    public Todo createTodo(@Argument(name = "todo") TodoRequestDTO todoRequest) {
+        return todoService.save(todoRequest);
     }
 
 }
