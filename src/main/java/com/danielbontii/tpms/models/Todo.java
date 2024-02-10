@@ -40,7 +40,7 @@ public class Todo {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(insertable = false, nullable = false)
+    @Column(insertable = false)
     private LocalDateTime updatedAt;
 
     @Override

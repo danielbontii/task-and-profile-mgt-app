@@ -10,15 +10,16 @@ type User {
     lastName: String!
     email: String!
     todos: [Todo]
-    created_at: LocalDateTime!
-    updated_at: LocalDateTime!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime!
 }
 
 type Todo{
+    id: ID!
     title: String!
     description: String
     completed: Boolean!
     user: User!
-    created_at: LocalDateTime!
-    updated_at: LocalDateTime!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime!
 }
