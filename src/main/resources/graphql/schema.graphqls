@@ -2,11 +2,12 @@ scalar LocalDateTime
 
 type Query {
     allTodos: [Todo]
-    todoById(id: ID): Todo!
+    todoById(id: ID!): Todo!
 }
 
 type Mutation {
     createTodo(todo: TodoInput): Todo
+    deleteTodo(id: ID!): Boolean
 }
 
 type User {

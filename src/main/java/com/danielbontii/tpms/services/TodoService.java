@@ -12,4 +12,6 @@ public interface TodoService {
     Todo findById(Long id);
 
     Todo save(TodoRequestDTO todoRequest);
+
+    boolean deleteById(Long id);
 }

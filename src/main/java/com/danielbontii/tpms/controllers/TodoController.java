@@ -32,4 +32,8 @@ public class TodoController {
         return todoService.save(todoRequest);
     }
 
+    @MutationMapping
+    public boolean deleteTodo(@Argument(name = "id") Long id) {
+        return todoService.deleteById(id);
+    }
 }

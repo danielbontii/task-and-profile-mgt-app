@@ -31,6 +31,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo findById(Long id) {
+        //Todo: Handle invalid IDs
         return todoRepository.findById(id).orElse(null);
     }
 
@@ -39,13 +40,14 @@ public class TodoServiceImpl implements TodoService {
     public Todo save(TodoRequestDTO todoRequest) {
         Optional<User> userOptional = userRepository.findById(todoRequest.getUserId());
 
-        //Todo: Handle thrown errors
         if (userOptional.isEmpty()) {
+            //Todo: After I learn error handling
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user id");
         }
 
         todoRepository.findByTitle(todoRequest.getTitle()).ifPresent(
                 todo -> {
+                    //Todo: After I learn error handling
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "todo with title " + todoRequest.getTitle() + " exists");
                 });
 
@@ -53,5 +55,20 @@ public class TodoServiceImpl implements TodoService {
         Todo newTodo = objectMapper.convertValue(todoRequest, Todo.class);
         newTodo.setUser(todoOwner);
         return todoRepository.save(newTodo);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteById(Long id) {
+
+        Optional<Todo> todoOptional = todoRepository.findById(id);
+        if (todoOptional.isEmpty()) {
+            //Todo: After I learn error handling
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
+        }
+        Todo todo = todoOptional.get();
+        todoRepository.delete(todo);
+
+        return true;
     }
 }
