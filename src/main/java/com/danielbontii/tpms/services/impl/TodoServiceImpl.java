@@ -3,12 +3,12 @@ package com.danielbontii.tpms.services.impl;
 import com.danielbontii.tpms.dtos.TodoRequestDTO;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
 import com.danielbontii.tpms.exceptions.NotFoundException;
+import com.danielbontii.tpms.mappers.TodoMapper;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.models.User;
 import com.danielbontii.tpms.repositories.TodoRepository;
 import com.danielbontii.tpms.repositories.UserRepository;
 import com.danielbontii.tpms.services.TodoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
 
-    private final ObjectMapper objectMapper;
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
@@ -47,7 +46,7 @@ public class TodoServiceImpl implements TodoService {
                     throw new AlreadyExistsException("Todo with title " + todoRequest.getTitle() + " exists");
                 });
 
-        Todo newTodo = objectMapper.convertValue(todoRequest, Todo.class);
+        Todo newTodo = TodoMapper.toTodo(todoRequest);
         newTodo.setUser(todoOwner);
         return todoRepository.save(newTodo);
     }
