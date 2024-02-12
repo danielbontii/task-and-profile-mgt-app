@@ -1,6 +1,8 @@
 package com.danielbontii.tpms.services.impl;
 
 import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.exceptions.AlreadyExistsException;
+import com.danielbontii.tpms.exceptions.NotFoundException;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.models.User;
 import com.danielbontii.tpms.repositories.TodoRepository;
@@ -9,12 +11,9 @@ import com.danielbontii.tpms.services.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,8 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
+    private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d +  not found";
+
     @Override
     public List<Todo> findAll() {
         return todoRepository.findAll();
@@ -31,27 +32,21 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo findById(Long id) {
-        //Todo: Handle invalid IDs
-        return todoRepository.findById(id).orElse(null);
+        return todoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(TODO_WITH_ID_NOT_FOUND.formatted(id)));
     }
 
     @Override
     @Transactional
     public Todo save(TodoRequestDTO todoRequest) {
-        Optional<User> userOptional = userRepository.findById(todoRequest.getUserId());
+        User todoOwner = userRepository.findById(todoRequest.getUserId())
+                .orElseThrow(() -> new NotFoundException("Invalid user id"));
 
-        if (userOptional.isEmpty()) {
-            //Todo: After I learn error handling
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user id");
-        }
-
-        todoRepository.findByTitle(todoRequest.getTitle()).ifPresent(
+        todoRepository.findByTitleIgnoreCase(todoRequest.getTitle()).ifPresent(
                 todo -> {
-                    //Todo: After I learn error handling
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "todo with title " + todoRequest.getTitle() + " exists");
+                    throw new AlreadyExistsException("Todo with title " + todoRequest.getTitle() + " exists");
                 });
 
-        User todoOwner = userOptional.get();
         Todo newTodo = objectMapper.convertValue(todoRequest, Todo.class);
         newTodo.setUser(todoOwner);
         return todoRepository.save(newTodo);
@@ -61,13 +56,9 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public boolean deleteById(Long id) {
 
-        Optional<Todo> todoOptional = todoRepository.findById(id);
-        if (todoOptional.isEmpty()) {
-            //Todo: After I learn error handling
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id");
-        }
-        Todo todo = todoOptional.get();
-        todoRepository.delete(todo);
+        Todo todoToDelete = todoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(TODO_WITH_ID_NOT_FOUND.formatted(id)));
+        todoRepository.delete(todoToDelete);
 
         return true;
     }

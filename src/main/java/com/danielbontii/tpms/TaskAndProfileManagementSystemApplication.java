@@ -19,6 +19,7 @@ public class TaskAndProfileManagementSystemApplication {
         SpringApplication.run(TaskAndProfileManagementSystemApplication.class, args);
     }
 
+    //TODO: Remove once I start adding users
     @Bean
     CommandLineRunner userAndTodoSeeder(UserRepository userRepository, TodoRepository todoRepository) {
 
@@ -42,7 +43,7 @@ public class TaskAndProfileManagementSystemApplication {
 
             }
 
-            if (todoRepository.findByTitle("Title 1").isEmpty()) {
+            if (todoRepository.findByTitleIgnoreCase("Title 1").isEmpty()) {
                 Todo todo = new Todo();
                 todo.setUser(savedBertha);
                 todo.setTitle("Title 1");
@@ -50,7 +51,7 @@ public class TaskAndProfileManagementSystemApplication {
                 todoRepository.save(todo);
             }
 
-            if (todoRepository.findByTitle("Title 2").isEmpty()) {
+            if (todoRepository.findByTitleIgnoreCase("Title 2").isEmpty()) {
                 Todo todo = new Todo();
                 todo.setUser(savedBertha);
                 todo.setTitle("Title 2");
