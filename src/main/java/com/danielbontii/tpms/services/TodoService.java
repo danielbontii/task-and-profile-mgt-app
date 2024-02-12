@@ -1,6 +1,6 @@
 package com.danielbontii.tpms.services;
 
-import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
 import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 
@@ -12,7 +12,7 @@ public interface TodoService {
 
     Todo findById(Long id);
 
-    Todo save(TodoRequestDTO todoRequest);
+    Todo save(TodoCreationRequestDTO todoRequest);
 
     boolean deleteById(Long id);
 

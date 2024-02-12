@@ -1,6 +1,6 @@
 package com.danielbontii.tpms.services.impl;
 
-import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
 import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
 import com.danielbontii.tpms.exceptions.NotFoundException;
@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional
-    public Todo save(TodoRequestDTO todoRequest) {
+    public Todo save(TodoCreationRequestDTO todoRequest) {
         User todoOwner = userRepository.findById(todoRequest.getUserId())
                 .orElseThrow(() -> new NotFoundException("Invalid user id"));
 

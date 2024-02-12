@@ -1,6 +1,6 @@
 package com.danielbontii.tpms.mappers;
 
-import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
 import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 import lombok.AccessLevel;
@@ -12,13 +12,13 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TodoMapper {
 
-    public static Todo toTodo(TodoRequestDTO todoRequest) {
+    public static Todo toTodo(TodoCreationRequestDTO todoCreationRequestDTO) {
         Todo todo = new Todo();
-        todo.setTitle(todoRequest.getTitle().trim());
-        todo.setCompleted(todoRequest.isCompleted());
+        todo.setTitle(todoCreationRequestDTO.getTitle().trim());
+        todo.setCompleted(todoCreationRequestDTO.isCompleted());
 
-        if (!Objects.isNull(todoRequest.getDescription())) {
-            todo.setDescription(todoRequest.getDescription().trim());
+        if (!Objects.isNull(todoCreationRequestDTO.getDescription())) {
+            todo.setDescription(todoCreationRequestDTO.getDescription().trim());
         }
 
         return todo;

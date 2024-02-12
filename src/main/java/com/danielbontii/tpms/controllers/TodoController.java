@@ -1,6 +1,6 @@
 package com.danielbontii.tpms.controllers;
 
-import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
 import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.services.TodoService;
@@ -29,8 +29,8 @@ public class TodoController {
     }
 
     @MutationMapping
-    public Todo createTodo(@Argument(name = "todo") TodoRequestDTO todoRequest) {
-        return todoService.save(todoRequest);
+    public Todo createTodo(@Argument(name = "todo") TodoCreationRequestDTO todoCreationRequestDTO) {
+        return todoService.save(todoCreationRequestDTO);
     }
 
     @MutationMapping
