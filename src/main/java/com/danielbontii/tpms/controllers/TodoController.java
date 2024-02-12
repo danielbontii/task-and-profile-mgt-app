@@ -1,6 +1,7 @@
 package com.danielbontii.tpms.controllers;
 
 import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.services.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +36,10 @@ public class TodoController {
     @MutationMapping
     public boolean deleteTodo(@Argument(name = "id") Long id) {
         return todoService.deleteById(id);
+    }
+
+    @MutationMapping
+    public Todo updateTodo(@Argument(name = "todo") TodoUpdateRequestDTO todoUpdateRequestDTO) {
+        return todoService.update(todoUpdateRequestDTO);
     }
 }

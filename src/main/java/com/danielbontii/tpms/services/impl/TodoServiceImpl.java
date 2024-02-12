@@ -1,6 +1,7 @@
 package com.danielbontii.tpms.services.impl;
 
 import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
 import com.danielbontii.tpms.exceptions.NotFoundException;
 import com.danielbontii.tpms.mappers.TodoMapper;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
-    private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d +  not found";
+    private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d not found";
 
     @Override
     public List<Todo> findAll() {
@@ -60,5 +62,22 @@ public class TodoServiceImpl implements TodoService {
         todoRepository.delete(todoToDelete);
 
         return true;
+    }
+
+    @Override
+    public Todo update(TodoUpdateRequestDTO todoUpdateRequestDTO) {
+        Long todoToUpdateId = todoUpdateRequestDTO.getId();
+        Todo todoToUpdate = todoRepository.findById(todoToUpdateId)
+                .orElseThrow(() -> new NotFoundException(TODO_WITH_ID_NOT_FOUND.formatted(todoToUpdateId)));
+
+        Todo updatedTodo = TodoMapper.toUpdatedTodo(todoToUpdate, todoUpdateRequestDTO);
+
+        String updatedTitle = updatedTodo.getTitle();
+
+        todoRepository.findByTitleIgnoreCase(updatedTitle).ifPresent(
+                todo -> {
+                    throw new AlreadyExistsException("Todo with title " + updatedTitle + " exists");
+                });
+        return todoRepository.save(updatedTodo);
     }
 }

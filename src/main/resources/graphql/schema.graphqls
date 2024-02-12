@@ -6,7 +6,8 @@ type Query {
 }
 
 type Mutation {
-    createTodo(todo: TodoInput): Todo
+    createTodo(todo: TodoCreationInput!): Todo
+    updateTodo(todo: TodoUpdateInput!): Todo
     deleteTodo(id: ID!): Boolean
 }
 
@@ -30,9 +31,16 @@ type Todo{
     updatedAt: LocalDateTime
 }
 
-input TodoInput {
+input TodoCreationInput {
     title: String!
     description: String
     userId: Int!  #  see if long is feasible later
     completed: Boolean
+}
+
+input TodoUpdateInput {
+    id: ID!
+    title: String!
+    description: String
+    completed: Boolean!
 }

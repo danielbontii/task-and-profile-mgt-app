@@ -1,6 +1,7 @@
 package com.danielbontii.tpms.mappers;
 
 import com.danielbontii.tpms.dtos.TodoRequestDTO;
+import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
 import com.danielbontii.tpms.models.Todo;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,15 @@ public class TodoMapper {
         }
 
         return todo;
+    }
+
+    public static Todo toUpdatedTodo(Todo todoToUpdate, TodoUpdateRequestDTO todoUpdateRequestDTO) {
+        todoToUpdate.setTitle(todoUpdateRequestDTO.getTitle().trim());
+        if (!Objects.isNull(todoUpdateRequestDTO.getDescription())) {
+            todoToUpdate.setDescription(todoUpdateRequestDTO.getDescription().trim());
+        }
+        todoToUpdate.setCompleted(todoUpdateRequestDTO.isCompleted());
+
+        return todoToUpdate;
     }
 }
