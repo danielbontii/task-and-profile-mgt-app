@@ -4,6 +4,7 @@ import com.danielbontii.tpms.dtos.TodoCreationInput;
 import com.danielbontii.tpms.dtos.TodoUpdateInput;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.services.TodoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -29,7 +30,7 @@ public class TodoController {
     }
 
     @MutationMapping
-    public Todo createTodo(@Argument(name = "todo") TodoCreationInput todoCreationInput) {
+    public Todo createTodo(@Argument(name = "todo") @Valid TodoCreationInput todoCreationInput) {
         return todoService.save(todoCreationInput);
     }
 
@@ -39,7 +40,7 @@ public class TodoController {
     }
 
     @MutationMapping
-    public Todo updateTodo(@Argument(name = "todo") TodoUpdateInput todoUpdateInput) {
+    public Todo updateTodo(@Argument(name = "todo") @Valid TodoUpdateInput todoUpdateInput) {
         return todoService.update(todoUpdateInput);
     }
 }

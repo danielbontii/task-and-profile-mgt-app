@@ -1,11 +1,10 @@
 package com.danielbontii.tpms.dtos;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TodoUpdateInput {
+@EqualsAndHashCode(callSuper = true)
+public class TodoUpdateInput extends TodoCreationInput {
     private Long id;
-    private String title;
-    private String description;
-    private boolean completed;
 }
