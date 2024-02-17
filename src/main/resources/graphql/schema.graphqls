@@ -10,7 +10,7 @@ type Mutation {
     updateTodo(todo: TodoUpdateInput!): Todo
     deleteTodo(id: ID!): Boolean
 
-    createUser(info: UserCreationInput): UserResponseDTO!
+    createUser(user: UserCreationInput): UserResponse!
 }
 
 type User {
@@ -36,7 +36,7 @@ type Todo {
 input TodoCreationInput {
     title: String!
     description: String
-    userId: Int!  #  see if long is feasible later // or ID
+    userId: ID!
     completed: Boolean
 }
 
@@ -54,7 +54,7 @@ input UserCreationInput {
     password: String!
 }
 
-type UserResponseDTO {
+type UserResponse {
     id: ID!
     firstName: String!
     lastName: String!

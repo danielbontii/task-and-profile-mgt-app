@@ -1,7 +1,7 @@
 package com.danielbontii.tpms.controllers;
 
 import com.danielbontii.tpms.dtos.UserCreationInput;
-import com.danielbontii.tpms.dtos.response.UserResponseDTO;
+import com.danielbontii.tpms.dtos.response.UserResponse;
 import com.danielbontii.tpms.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @MutationMapping
-    public UserResponseDTO createUser(@Argument(name = "info") @Valid UserCreationInput userCreationInput) {
+    public UserResponse createUser(@Argument(name = "user") @Valid UserCreationInput userCreationInput) {
         return userService.save(userCreationInput);
     }
 }

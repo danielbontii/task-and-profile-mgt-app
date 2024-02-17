@@ -3,7 +3,7 @@ package com.danielbontii.tpms.dtos;
 import lombok.Data;
 
 @Data
-public class TodoCreationRequestDTO {
+public class TodoCreationInput {
 
     //Todo: Handle validations
 

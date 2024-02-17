@@ -1,7 +1,7 @@
 package com.danielbontii.tpms.services.impl;
 
-import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
-import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationInput;
+import com.danielbontii.tpms.dtos.TodoUpdateInput;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
 import com.danielbontii.tpms.exceptions.NotFoundException;
 import com.danielbontii.tpms.mappers.TodoMapper;
@@ -38,7 +38,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional
-    public Todo save(TodoCreationRequestDTO todoRequest) {
+    public Todo save(TodoCreationInput todoRequest) {
         User todoOwner = userRepository.findById(todoRequest.getUserId())
                 .orElseThrow(() -> new NotFoundException("Invalid user id"));
 
@@ -64,12 +64,12 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo update(TodoUpdateRequestDTO todoUpdateRequestDTO) {
-        Long todoToUpdateId = todoUpdateRequestDTO.getId();
+    public Todo update(TodoUpdateInput todoUpdateInput) {
+        Long todoToUpdateId = todoUpdateInput.getId();
         Todo todoToUpdate = todoRepository.findById(todoToUpdateId)
                 .orElseThrow(() -> new NotFoundException(TODO_WITH_ID_NOT_FOUND.formatted(todoToUpdateId)));
 
-        Todo updatedTodo = TodoMapper.toUpdatedTodo(todoToUpdate, todoUpdateRequestDTO);
+        Todo updatedTodo = TodoMapper.toUpdatedTodo(todoToUpdate, todoUpdateInput);
 
         String updatedTitle = updatedTodo.getTitle();
 

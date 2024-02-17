@@ -1,7 +1,7 @@
 package com.danielbontii.tpms.controllers;
 
-import com.danielbontii.tpms.dtos.TodoCreationRequestDTO;
-import com.danielbontii.tpms.dtos.TodoUpdateRequestDTO;
+import com.danielbontii.tpms.dtos.TodoCreationInput;
+import com.danielbontii.tpms.dtos.TodoUpdateInput;
 import com.danielbontii.tpms.models.Todo;
 import com.danielbontii.tpms.services.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class TodoController {
     }
 
     @MutationMapping
-    public Todo createTodo(@Argument(name = "todo") TodoCreationRequestDTO todoCreationRequestDTO) {
-        return todoService.save(todoCreationRequestDTO);
+    public Todo createTodo(@Argument(name = "todo") TodoCreationInput todoCreationInput) {
+        return todoService.save(todoCreationInput);
     }
 
     @MutationMapping
@@ -39,7 +39,7 @@ public class TodoController {
     }
 
     @MutationMapping
-    public Todo updateTodo(@Argument(name = "todo") TodoUpdateRequestDTO todoUpdateRequestDTO) {
-        return todoService.update(todoUpdateRequestDTO);
+    public Todo updateTodo(@Argument(name = "todo") TodoUpdateInput todoUpdateInput) {
+        return todoService.update(todoUpdateInput);
     }
 }

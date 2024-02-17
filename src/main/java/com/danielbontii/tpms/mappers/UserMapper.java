@@ -1,7 +1,7 @@
 package com.danielbontii.tpms.mappers;
 
 import com.danielbontii.tpms.dtos.UserCreationInput;
-import com.danielbontii.tpms.dtos.response.UserResponseDTO;
+import com.danielbontii.tpms.dtos.response.UserResponse;
 import com.danielbontii.tpms.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserMapper {
         return user;
     }
 
-    public UserResponseDTO toUserResponseDTO(User user) {
-        return objectMapper.convertValue(user, UserResponseDTO.class);
+    public UserResponse toUserResponseDTO(User user) {
+        return objectMapper.convertValue(user, UserResponse.class);
     }
 }

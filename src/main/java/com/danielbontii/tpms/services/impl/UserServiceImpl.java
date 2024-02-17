@@ -1,7 +1,7 @@
 package com.danielbontii.tpms.services.impl;
 
 import com.danielbontii.tpms.dtos.UserCreationInput;
-import com.danielbontii.tpms.dtos.response.UserResponseDTO;
+import com.danielbontii.tpms.dtos.response.UserResponse;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
 import com.danielbontii.tpms.mappers.UserMapper;
 import com.danielbontii.tpms.models.User;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserResponseDTO save(UserCreationInput userCreationInput) {
+    public UserResponse save(UserCreationInput userCreationInput) {
         userRepository.findByEmail(userCreationInput.getEmail())
                 .ifPresent(user -> {
                     throw new AlreadyExistsException("email already taken");
