@@ -6,6 +6,7 @@ import graphql.schema.DataFetchingEnvironment;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.graphql.execution.ErrorType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,6 +32,16 @@ public class CustomExceptionResolver extends DataFetcherExceptionResolverAdapter
              * */
             return GraphqlErrorBuilder.newError()
                     .errorType(ErrorType.BAD_REQUEST)
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .location(env.getField().getSourceLocation())
+                    .build();
+        }
+
+        if (ex instanceof BadCredentialsException) {
+
+            return GraphqlErrorBuilder.newError()
+                    .errorType(ErrorType.UNAUTHORIZED)
                     .message(ex.getMessage())
                     .path(env.getExecutionStepInfo().getPath())
                     .location(env.getField().getSourceLocation())

@@ -3,6 +3,8 @@ scalar LocalDateTime
 type Query {
     allTodos: [Todo]
     todoById(id: ID!): Todo!
+
+    usernamePasswordToken(loginInput: LoginInput!): String!
 }
 
 type Mutation {
@@ -33,6 +35,13 @@ type Todo {
     updatedAt: LocalDateTime
 }
 
+type UserResponse {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+}
+
 input TodoCreationInput {
     title: String!
     description: String
@@ -54,9 +63,7 @@ input UserCreationInput {
     password: String!
 }
 
-type UserResponse {
-    id: ID!
-    firstName: String!
-    lastName: String!
+input LoginInput {
     email: String!
+    password: String!
 }
