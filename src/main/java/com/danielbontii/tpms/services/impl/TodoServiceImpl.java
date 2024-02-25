@@ -12,6 +12,7 @@ import com.danielbontii.tpms.repositories.UserRepository;
 import com.danielbontii.tpms.services.TodoService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class TodoServiceImpl implements TodoService {
     private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d not found";
 
     @Override
+    @Secured({"SCOPE_ADMIN"})
     public List<Todo> findAll() {
         return todoRepository.findAll();
     }
