@@ -21,6 +21,7 @@ type User {
     lastName: String!
     email: String!
     todos: [Todo]
+    role: String!
     createdAt: LocalDateTime!
     updatedAt: LocalDateTime
 }
@@ -40,6 +41,7 @@ type UserResponse {
     firstName: String!
     lastName: String!
     email: String!
+    role: String!
 }
 
 input TodoCreationInput {
@@ -61,6 +63,7 @@ input UserCreationInput {
     lastName: String!
     email: String!
     password: String!
+    role: String
 }
 
 input LoginInput {

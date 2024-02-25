@@ -1,5 +1,6 @@
 package com.danielbontii.tpms.dtos;
 
+import com.danielbontii.tpms.enums.Role;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -22,5 +23,6 @@ public class UserCreationInput {
     )
     private String password;
 
-    //TODO: Add Role and maybe permisison Id later
+    //Todo: Add Validation for this
+    Role role = Role.USER;
 }
