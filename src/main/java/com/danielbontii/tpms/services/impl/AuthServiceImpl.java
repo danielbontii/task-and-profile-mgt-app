@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -32,12 +33,13 @@ public class AuthServiceImpl implements AuthService {
         if (authentication.isAuthenticated()) {
             Instant now = Instant.now();
 
-            //TODO: Add Scope
             JwtClaimsSet claims = JwtClaimsSet.builder()
                     .issuer("self")
                     .issuedAt(now)
                     .expiresAt(now.plus(1, ChronoUnit.HOURS))
                     .subject(authentication.getName())
+                    .claims(scope -> scope.put("scope",
+                            authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()))
                     .build();
             return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
         }
