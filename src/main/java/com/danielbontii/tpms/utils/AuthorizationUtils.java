@@ -1,5 +1,6 @@
 package com.danielbontii.tpms.utils;
 
+import com.danielbontii.tpms.models.Todo;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -22,5 +23,9 @@ public class AuthorizationUtils {
 
     public static Jwt getPrincipal(Authentication authentication) {
         return (Jwt) authentication.getPrincipal();
+    }
+
+    public static boolean authorizesTodoManipulation(Authentication authentication, Todo todo) {
+        return todo.getUser().getEmail().equals(getPrincipal(authentication).getClaimAsString("sub"));
     }
 }

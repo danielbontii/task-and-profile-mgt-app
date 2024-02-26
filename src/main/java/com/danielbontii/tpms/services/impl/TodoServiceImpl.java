@@ -14,9 +14,8 @@ import com.danielbontii.tpms.services.TodoService;
 import com.danielbontii.tpms.utils.AuthorizationUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +42,16 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo findById(Long id) {
-        return todoRepository.findById(id)
+    public Todo findById(Long id, Authentication authentication) {
+        Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(TODO_WITH_ID_NOT_FOUND.formatted(id)));
+
+        if (!AuthorizationUtils.authorizesTodoManipulation(authentication, todo) &&
+                !AuthorizationUtils.permits(authentication, Authorities.ADMIN)) {
+            throw new AccessDeniedException("Access Denied");
+        }
+
+        return todo;
     }
 
     @Override

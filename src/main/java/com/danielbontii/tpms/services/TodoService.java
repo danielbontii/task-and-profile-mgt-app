@@ -11,7 +11,7 @@ public interface TodoService {
 
     List<Todo> findAll(Authentication authentication);
 
-    Todo findById(Long id);
+    Todo findById(Long id, Authentication authentication);
 
     Todo save(TodoCreationInput todoRequest);
 

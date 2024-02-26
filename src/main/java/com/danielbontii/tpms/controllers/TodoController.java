@@ -29,8 +29,9 @@ public class TodoController {
     }
 
     @QueryMapping
-    public Todo todoById(@Argument(name = "id") Long id) {
-        return todoService.findById(id);
+    @Secured({Authorities.ADMIN, Authorities.USER})
+    public Todo todoById(@Argument(name = "id") Long id, Authentication authentication) {
+        return todoService.findById(id, authentication);
     }
 
     @MutationMapping
