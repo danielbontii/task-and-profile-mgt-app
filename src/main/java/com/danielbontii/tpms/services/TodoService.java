@@ -15,7 +15,7 @@ public interface TodoService {
 
     Todo save(TodoCreationInput todoRequest);
 
-    boolean deleteById(Long id);
+    boolean deleteById(Long id, Authentication authentication);
 
-    Todo update(TodoUpdateInput todoUpdateInput);
+    Todo update(TodoUpdateInput todoUpdateInput, Authentication authentication);
 }

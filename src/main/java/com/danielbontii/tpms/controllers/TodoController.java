@@ -35,17 +35,20 @@ public class TodoController {
     }
 
     @MutationMapping
+    @Secured({Authorities.ADMIN, Authorities.USER})
     public Todo createTodo(@Argument(name = "todo") @Valid TodoCreationInput todoCreationInput) {
         return todoService.save(todoCreationInput);
     }
 
     @MutationMapping
-    public boolean deleteTodo(@Argument(name = "id") Long id) {
-        return todoService.deleteById(id);
+    @Secured({Authorities.ADMIN, Authorities.USER})
+    public boolean deleteTodo(@Argument(name = "id") Long id, Authentication authentication) {
+        return todoService.deleteById(id, authentication);
     }
 
     @MutationMapping
-    public Todo updateTodo(@Argument(name = "todo") @Valid TodoUpdateInput todoUpdateInput) {
-        return todoService.update(todoUpdateInput);
+    @Secured({Authorities.ADMIN, Authorities.USER})
+    public Todo updateTodo(@Argument(name = "todo") @Valid TodoUpdateInput todoUpdateInput, Authentication authentication) {
+        return todoService.update(todoUpdateInput, authentication);
     }
 }

@@ -10,7 +10,9 @@ import java.util.Optional;
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
-    Optional<Todo> findByTitleIgnoreCase(String title);
+    Optional<Todo> findByTitleIgnoreCaseAndUserIdEquals(String title, Long userId);
 
     List<Todo> findByUserEmail(String userEmail);
+
+    Optional<Todo> findByTitleIgnoreCaseAndIdEqualsAndUserIdEquals(String title, Long todoId, Long userId);
 }
