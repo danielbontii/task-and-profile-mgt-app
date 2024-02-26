@@ -14,5 +14,5 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
     List<Todo> findByUserEmail(String userEmail);
 
-    Optional<Todo> findByTitleIgnoreCaseAndIdEqualsAndUserIdEquals(String title, Long todoId, Long userId);
+    Optional<Todo> findByIdNotAndUserIdEqualsAndTitleIgnoreCase(Long todoId, Long userId, String title);
 }

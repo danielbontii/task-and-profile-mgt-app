@@ -100,7 +100,7 @@ public class TodoServiceImpl implements TodoService {
 
         String updatedTitle = updatedTodo.getTitle();
 
-        todoRepository.findByTitleIgnoreCaseAndIdEqualsAndUserIdEquals(updatedTitle, todoToUpdate.getId(), todoToUpdate.getUser().getId())
+        todoRepository.findByIdNotAndUserIdEqualsAndTitleIgnoreCase(updatedTodo.getId(), updatedTodo.getUser().getId(), updatedTitle)
                 .ifPresent(todo -> {
                     throw new AlreadyExistsException("Todo with title " + updatedTitle + " exists");
                 });
