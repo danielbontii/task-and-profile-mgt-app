@@ -1,5 +1,6 @@
 package com.danielbontii.tpms.services.impl;
 
+import com.danielbontii.tpms.constants.Authorities;
 import com.danielbontii.tpms.dtos.TodoCreationInput;
 import com.danielbontii.tpms.dtos.TodoUpdateInput;
 import com.danielbontii.tpms.exceptions.AlreadyExistsException;
@@ -10,9 +11,13 @@ import com.danielbontii.tpms.models.User;
 import com.danielbontii.tpms.repositories.TodoRepository;
 import com.danielbontii.tpms.repositories.UserRepository;
 import com.danielbontii.tpms.services.TodoService;
+import com.danielbontii.tpms.utils.AuthorizationUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +32,13 @@ public class TodoServiceImpl implements TodoService {
     private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d not found";
 
     @Override
-    @Secured({"SCOPE_ADMIN"})
-    public List<Todo> findAll() {
+    public List<Todo> findAll(Authentication authentication) {
+
+        if (!AuthorizationUtils.permits(authentication, Authorities.ADMIN)) {
+            Jwt principal = AuthorizationUtils.getPrincipal(authentication);
+            return todoRepository.findByUserEmail(principal.getClaimAsString("sub"));
+        }
+
         return todoRepository.findAll();
     }
 
