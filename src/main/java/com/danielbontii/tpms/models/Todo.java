@@ -16,14 +16,15 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "todos")
+@Table(name = "todos",
+        uniqueConstraints = @UniqueConstraint(name = "uc_todos_title_todos_id", columnNames = {"user_id", "title"}))
 public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
 
     private String description;

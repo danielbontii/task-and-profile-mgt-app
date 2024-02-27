@@ -1,5 +1,6 @@
 package com.danielbontii.tpms.models;
 
+import com.danielbontii.tpms.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,7 +34,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    //Todo: Add Role
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'USER'")
+    Role role = Role.USER;
+
+    //TODO: Add image Url
 
     @OneToMany(mappedBy = "user")
     private Set<Todo> todos;
