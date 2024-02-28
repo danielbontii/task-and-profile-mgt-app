@@ -1,0 +1,25 @@
+type Mutation {
+    """
+    A mutation to create a user
+    No two users can have the same email
+    """
+    createUser(user: UserCreationInput): UserResponse!
+
+    """
+    A mutation to create a todo
+    No single user can have two todos with the same title
+    """
+    createTodo(todo: TodoCreationInput!): Todo
+
+    """
+    A mutation to update an existing todo
+    The todo must exist to be updated
+    """
+    updateTodo(todo: TodoUpdateInput!): Todo
+
+    """
+    A mutation to delete an existing todo
+    The todo must exist to be deleted
+    """
+    deleteTodo(id: ID!): Boolean
+}
