@@ -31,6 +31,9 @@ public class TodoServiceImpl implements TodoService {
     private static final String TODO_WITH_ID_NOT_FOUND = "Todo with id %d not found";
     private static final String ACCESS_DENIED = "Access Denied";
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     public List<Todo> findAll(Authentication authentication) {
 
@@ -42,6 +45,9 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.findAll();
     }
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     public Todo findById(Long id, Authentication authentication) {
         Todo todo = todoRepository.findById(id)
@@ -55,6 +61,9 @@ public class TodoServiceImpl implements TodoService {
         return todo;
     }
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     @Transactional
     public Todo save(TodoCreationInput todoRequest) {
@@ -71,6 +80,9 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.save(newTodo);
     }
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     @Transactional
     public boolean deleteById(Long id, Authentication authentication) {
@@ -86,6 +98,9 @@ public class TodoServiceImpl implements TodoService {
         return true;
     }
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     public Todo update(TodoUpdateInput todoUpdateInput, Authentication authentication) {
         Long todoToUpdateId = todoUpdateInput.getId();

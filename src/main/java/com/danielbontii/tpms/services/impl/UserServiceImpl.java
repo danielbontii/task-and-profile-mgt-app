@@ -22,6 +22,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     public UserResponse save(UserCreationInput userCreationInput) {
         userRepository.findByEmail(userCreationInput.getEmail())

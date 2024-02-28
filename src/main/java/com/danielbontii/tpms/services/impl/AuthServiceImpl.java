@@ -23,6 +23,9 @@ public class AuthServiceImpl implements AuthService {
     private final JwtEncoder jwtEncoder;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * {@InheritDoc}
+     */
     @Override
     public String authenticateUsernameAndPassword(LoginInput loginInput) {
 
