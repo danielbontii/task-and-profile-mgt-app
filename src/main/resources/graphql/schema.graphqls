@@ -1,10 +1,29 @@
 scalar LocalDateTime
 
 type Query {
-    allTodos: [Todo]
-    todoById(id: ID!): Todo!
-
+    """
+    A query to retrieve a token.
+    This is how a user gets authorization for some actions.
+    Secured mutations and queries are made with a this token
+    """
     usernamePasswordToken(loginInput: LoginInput!): String!
+
+
+    """
+    A query to retrieve all todos.
+    Request must be made with a bearer token.
+    If the user is an ADMIN, all todos will be retrieved
+    If the user is not an ADMIN, only their todos will be retrieved
+    """
+    allTodos: [Todo]
+
+    """
+    A query to retrieve a single todo by its ID.
+    Request must be made with a bearer token.
+    An ADMIN can retrieve any todo by its ID
+    A USER can only retrieve todos they own by ID
+    """
+    todoById(id: ID!): Todo!
 }
 
 type Mutation {
