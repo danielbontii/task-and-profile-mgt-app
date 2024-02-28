@@ -1,26 +1,97 @@
+"""
+The payload required to create a todo
+"""
 input TodoCreationInput {
+    """
+    The title of the todo
+    """
     title: String!
+    """
+    The description of the todo
+    Cannot have more than 255 characters
+    """
     description: String
+    """
+    The id of the user creating the todo
+    The user must be in the system
+    """
     userId: ID!
+    """
+    The completion status of the todo (True or False)
+    """
     completed: Boolean
 }
 
+"""
+The payload required to update a todo
+"""
 input TodoUpdateInput {
+    """
+    The ID of the todo to be updated
+    The todo must already be in the system
+    """
     id: ID!
+    """
+    The new title for the todo
+    Cannot have more than 255 characters
+    """
     title: String!
+    """
+    The new description for the todo
+    Cannot have more than 255 characters
+    """
     description: String
+    """
+    The new completion status for the todo (True or False)
+    """
     completed: Boolean!
 }
 
+"""
+The payload required to create a user
+"""
 input UserCreationInput {
+    """
+    The first name for the user
+    Cannot have more than 50 characters
+    """
     firstName: String!
+    """
+    The last name for the user
+    Cannot have more than 50 characters
+    """
     lastName: String!
+    """
+    The email for the user
+    Must have a valid email format
+    """
     email: String!
+    """
+    The first password for the user
+    Must have 8+ chars, 1+ each of lowercase, uppercase, number, special char
+    """
     password: String!
+    """
+    The role for the user
+    Defaults to USER is omitted
+    Only ADMIN can create another ADMIN
+    """
     role: String
 }
 
+
+"""
+The payload required to obtain a token
+"""
 input LoginInput {
+    lastName: String!
+    """
+    The email for the user
+    """
     email: String!
+
+    """
+    The password for the user
+    """
     password: String!
 }
