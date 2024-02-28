@@ -8,7 +8,6 @@ type Query {
     """
     usernamePasswordToken(loginInput: LoginInput!): String!
 
-
     """
     A query to retrieve all todos.
     Request must be made with a bearer token.

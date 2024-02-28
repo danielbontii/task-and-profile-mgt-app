@@ -1,28 +1,101 @@
+"""
+Represents a user in the system
+"""
 type User {
+    """
+    The unique identifier for the user
+    """
     id: ID!
+    """
+    The first name for the user
+    """
     firstName: String!
+    """
+    The last name for the user
+    """
     lastName: String!
+    """
+    The email for the user
+    No two users can have the same email
+    """
     email: String!
+    """
+    All the todos created by the user
+    No single user can have two todos with the same title
+    """
     todos: [Todo]
+    """
+    The role for the user
+    This determines the features the user can access
+    """
     role: String!
+    """
+    When the user account was created
+    """
     createdAt: LocalDateTime!
+    """
+    When the user account was last updated
+    """
     updatedAt: LocalDateTime
 }
 
+"""
+Represents a todo in the system
+A task that a user has planned to complete later
+"""
 type Todo {
+    """
+    The unique identifier for the todo
+    """
     id: ID!
+    """
+    The title for the todo
+    """
     title: String!
+    """
+    The description for the todo
+    """
     description: String
+    """
+    The completion status for the todo
+    """
     completed: Boolean!
+    """
+    The user who created the todo
+    """
     user: User!
+    """
+    When the todo account was created
+    """
     createdAt: LocalDateTime!
+    """
+    When the todo account was last updated
+    """
     updatedAt: LocalDateTime
 }
 
+"""
+Represents the result return when a user is created
+"""
 type UserResponse {
+    """
+    The unique identifier for the newly created user
+    """
     id: ID!
+    """
+    The first name for the newly created user
+    """
     firstName: String!
+    """
+    The last name for the newly created user
+    """
     lastName: String!
+    """
+    The email for the newly created user
+    """
     email: String!
+    """
+    The role for the newly created user
+    """
     role: String!
 }
