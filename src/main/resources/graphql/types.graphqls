@@ -1,0 +1,28 @@
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    todos: [Todo]
+    role: String!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+}
+
+type Todo {
+    id: ID!
+    title: String!
+    description: String
+    completed: Boolean!
+    user: User!
+    createdAt: LocalDateTime!
+    updatedAt: LocalDateTime
+}
+
+type UserResponse {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    role: String!
+}

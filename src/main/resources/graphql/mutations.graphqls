@@ -1,0 +1,7 @@
+type Mutation {
+    createTodo(todo: TodoCreationInput!): Todo
+    updateTodo(todo: TodoUpdateInput!): Todo
+    deleteTodo(id: ID!): Boolean
+
+    createUser(user: UserCreationInput): UserResponse!
+}
