@@ -13,3 +13,8 @@ spring:
   graphql:
     graphiql:
       enabled: true
+
+
+logging:
+  file:
+    path: logs/
