@@ -14,7 +14,19 @@ spring:
     graphiql:
       enabled: true
 
-
 logging:
   file:
     path: logs/
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,httpexchanges
+  endpoint:
+    health:
+      show-details: always
+  httpexchanges:
+    recording:
+      include: time_taken
