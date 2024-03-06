@@ -84,7 +84,6 @@ input UserCreationInput {
 The payload required to obtain a token
 """
 input LoginInput {
-    lastName: String!
     """
     The email for the user
     """
